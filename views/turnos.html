@@ -1,2 +1,21 @@
 
-<p>Turnos</p>
+<h3>Turnos</h3>
+
+
+
+<table class="table table-hover">
+  <th>Turno</th>
+  <th>Usuario</th>	
+  <th>Comentarios</th>	
+  <th>Acciones</th>
+ 
+  <tr ng-repeat="turno in turnos" ng-if="false == turno.atendido">
+  	 
+  	<td>{{turno.turno}}</td>
+  	<td>{{turno.name}}</td>
+  	<td> <textarea></textarea></td>
+  	<td><button type="button" ng-click="atender(turno)" >Atendido</button></td>
+  	
+  	</tr>
+  	
+</table>

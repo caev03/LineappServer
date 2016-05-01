@@ -7,13 +7,13 @@ app.config(function($routeProvider) {
             templateUrl : 'views/home.html',
             controller  : 'mainController'
         })
-        .when('/acerca', {
+        .when('/turnos', {
             templateUrl : 'views/turnos.html',
-            controller  : 'aboutController'
+            controller  : 'turnosController'
         })
-        .when('/contacto', {
+        .when('/atendidos', {
             templateUrl : 'views/actual.html',
-            controller  : 'contactController'
+            controller  : 'turnosController'
         })
          .when('/signin', {
             templateUrl : 'views/signin.html',
@@ -30,17 +30,29 @@ app.config(function($routeProvider) {
 });
 
 
-app.factory("Aut",function(FBURL, $firebaseAuth){
+app.factory("Aut",function($firebaseAuth){
 var ref = new Firebase("https://resplendent-inferno-6968.firebaseio.com");
   // create an instance of the authentication service
-  var auth = $firebaseAuth(ref);
+  var aut = $firebaseAuth(ref);
+
+
   var Aut = {
+    registro: function(usuario){
+        return aut.$createUser({
+            email: usuario.email,
+            password: usuario.pass
+        });
+     },
+     sesion: function(usuario){
+        return aut.$authWithPassword({
+            email:usuario.email,
+            password:usuario.pass
+        });
+     }
+     
+ }
+return Aut;
 
-
-
-  }
-
-  return Aut;
 });
 
 
@@ -48,7 +60,17 @@ app.controller('mainController', function($scope,$firebaseAuth){
 
 });
 
-app.controller('aboutController', function($scope){
+app.controller('turnosController', function($scope){
+$scope.turnos = [{name:"pedro",turno:1,atendido:false,comentario:""},{name:"ppedro",turno:2,atendido:true,comentario:"huehuehue"},{name:"pedro",turno:3,atendido:false,comentario:""}];
+$scope.atender = function(turno){
+console.log(turno);
+ var index = $scope.turnos.indexOf(turno);
+ console.log(index);
+ $scope.turnos[index].atendido = true;
+ console.log($scope.turnos[index]);
+
+}
+
 
 });
 
@@ -57,13 +79,23 @@ app.controller('contactController', function($scope){
 
 });
 
-app.controller('authController', function($scope){
-$scope.sesion = function(usuario){
-console.log(usuario);
-}
+app.controller('authController', function($scope, Aut){
 $scope.registro = function(usuario){
-console.log(usuario);
+Aut.registro(usuario).then(function(){
+console.log("Usuario registrado");
+}, function(error){
+    console.log(error);
+});
 }
+
+$scope.sesion = function(usuario){
+Aut.sesion(usuario).then(function(){
+console.log("Sesion iniciada");
+}, function(error){
+    console.log(error);
+});
+}
+
 
 });     
 
