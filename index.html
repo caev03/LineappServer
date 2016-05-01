@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app='RegistroApp'>
+<head>  
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+
+</head>  
+<body ng-controller='mainController' >  
+  <div ng-include="'views/nav.html'"></div>
+  <header>
+    <h1>Angular Routing</h1>
+      <nav> 
+        <ul> 
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#acerca">Acerca </a></li>
+          <li><a href="#contacto">Contacto</a></li>         </ul> 
+      </nav>
+    </header>
+    <div id="main">
+      <!-- Aquí inyectamos las vistas -->
+      <div ng-view></div> 
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.7/angular.min.js"></script> 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.3/angular-route.js"></script>
+    <!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
